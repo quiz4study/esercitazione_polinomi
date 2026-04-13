@@ -24,9 +24,14 @@
         .incorrect { color: #dc2626; font-weight: bold; background-color: #fef2f2; border: 1px solid #ef4444; }
         .retry { color: #d97706; font-weight: bold; background-color: #fffbeb; border: 1px solid #f59e0b; }
         .feedback { display: none; margin-top: 0.5rem; padding: 0.75rem; border-radius: 0.375rem; }
-        .help-box { display: none; background-color: #fefce8; border: 1px solid #fef08a; padding: 0.75rem; border-radius: 0.5rem; margin-top: 0.5rem; color: #854d0e; font-size: 0.875rem; }
+        .help-box { display: none; background-color: #fefce8; border: 1px solid #fef08a; padding: 0.75rem; border-radius: 0.5rem; margin-bottom: 1rem; color: #854d0e; font-size: 0.875rem; }
         .help-icon { cursor: pointer; transition: transform 0.2s; display: inline-flex; align-items: center; justify-content: center; }
         .help-icon:hover { transform: scale(1.2); }
+        @keyframes bounce-short {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-bounce-short { animation: bounce-short 1s ease-in-out 2; }
     </style>
 </head>
 <body class="bg-slate-50 min-h-screen p-4 md:p-8 font-sans tex2jax_process">
@@ -34,9 +39,8 @@
     <div class="max-w-4xl mx-auto bg-white shadow-xl rounded-2xl overflow-hidden">
         <header class="bg-emerald-600 p-6 text-white text-center relative">
             <h1 class="text-3xl font-bold">Esercitazione: I Polinomi</h1>
-            <p class="text-emerald-100 mt-2 text-lg italic">Variante della prova di verifica</p>
+            <p class="text-emerald-100 mt-2 text-lg italic">Variante della prova di verifica con aiuti</p>
             
-            <!-- Badge Punteggio Real-time -->
             <div class="absolute top-4 right-4 bg-white/20 backdrop-blur-md rounded-lg px-4 py-2 border border-white/30 hidden md:block">
                 <p class="text-xs uppercase tracking-wider font-bold">Progresso</p>
                 <p class="text-xl font-mono" id="score-counter">0 / 10</p>
@@ -50,11 +54,15 @@
                 <h2 class="text-xl font-semibold border-b-2 border-emerald-200 pb-2 mb-4">1. Identificazione e Gradi</h2>
                 
                 <div class="space-y-8">
+                    <!-- Es 1 -->
                     <div class="question-block" data-qid="1" data-answer="a" data-attempts="0">
-                        <div class="flex items-center gap-2 mb-3">
+                        <div class="flex items-center gap-2 mb-2">
                             <p class="font-medium">1. Indica quale delle seguenti espressioni letterali è un polinomio:</p>
                             <span onclick="toggleHelp(this)" class="help-icon text-xl" title="Aiuto">💡</span>
                         </div>
+                        <!-- Suggerimento riposizionato qui -->
+                        <div class="help-box">Un polinomio è una somma algebrica di monomi. Non possono esserci variabili al denominatore o sotto radice (es: $x$ deve stare a numeratore).</div>
+                        
                         <div class="space-y-2 options-container">
                             <label class="flex items-center space-x-3 p-3 border rounded hover:bg-gray-50 cursor-pointer">
                                 <input type="radio" name="q1" value="a" class="w-4 h-4">
@@ -69,24 +77,29 @@
                                 <span>$ \frac{3a + b}{a} $</span>
                             </label>
                         </div>
-                        <div class="help-box">Un polinomio è una somma di monomi. No variabili al denominatore!</div>
                         <button onclick="checkRadio(this)" class="check-btn mt-3 px-4 py-2 bg-emerald-500 text-white rounded">Controlla</button>
                         <div class="feedback text-sm"></div>
                     </div>
 
+                    <!-- Es 2 -->
                     <div class="question-block" data-qid="2" data-answer="6" data-attempts="0">
                         <div class="flex items-center gap-2 mb-3">
                             <p class="font-medium">2. Grado complessivo del polinomio $ 3x^2y^4 - 7x^5 + 2xy^2 $?</p>
+                            <span onclick="toggleHelp(this)" class="help-icon text-xl" title="Aiuto">💡</span>
                         </div>
+                        <div class="help-box">Il grado complessivo è il massimo tra i gradi dei singoli monomi. Calcola: $2+4$, $5$, $1+2$.</div>
                         <input type="number" class="w-24 p-2 border rounded" placeholder="?">
                         <button onclick="checkInput(this)" class="check-btn ml-2 px-4 py-2 bg-emerald-500 text-white rounded">Controlla</button>
                         <div class="feedback text-sm"></div>
                     </div>
 
+                    <!-- Es 3 -->
                     <div class="question-block" data-qid="3" data-answer="4" data-attempts="0">
                         <div class="flex items-center gap-2 mb-3">
                             <p class="font-medium">3. Grado rispetto alla lettera $b$ di $ a^3b^2 - 5ab^4 + 2a^2b $?</p>
+                            <span onclick="toggleHelp(this)" class="help-icon text-xl" title="Aiuto">💡</span>
                         </div>
+                        <div class="help-box">Osserva solo gli esponenti della lettera $b$: sono 2, 4 e 1. Qual è il maggiore?</div>
                         <input type="number" class="w-24 p-2 border rounded" placeholder="?">
                         <button onclick="checkInput(this)" class="check-btn ml-2 px-4 py-2 bg-emerald-500 text-white rounded">Controlla</button>
                         <div class="feedback text-sm"></div>
@@ -98,8 +111,13 @@
             <section>
                 <h2 class="text-xl font-semibold border-b-2 border-emerald-200 pb-2 mb-4">2. Proprietà e Tipologie</h2>
                 <div class="space-y-8">
+                    <!-- Es 4 -->
                     <div class="question-block" data-qid="4" data-attempts="0">
-                        <p class="font-medium mb-3">4. Seleziona i polinomi <b>omogenei</b>:</p>
+                        <div class="flex items-center gap-2 mb-3">
+                            <p class="font-medium">4. Seleziona i polinomi <b>omogenei</b>:</p>
+                            <span onclick="toggleHelp(this)" class="help-icon text-xl" title="Aiuto">💡</span>
+                        </div>
+                        <div class="help-box">Un polinomio è omogeneo se tutti i suoi monomi hanno lo stesso grado complessivo.</div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                             <label class="flex items-center space-x-2 p-2 bg-gray-50 rounded border cursor-pointer">
                                 <input type="checkbox" data-correct="true" class="cb-q4"> <span>$ 3x^2y - xy^2 + y^3 $</span>
@@ -118,20 +136,30 @@
                         <div class="feedback text-sm"></div>
                     </div>
 
+                    <!-- Es 5 -->
                     <div class="question-block" data-qid="5" data-attempts="0">
-                        <p class="font-medium mb-3">5. Analizza $ x^3 - 3x^2y + 3xy^2 - y^3 $:</p>
+                        <div class="flex items-center gap-2 mb-3">
+                            <p class="font-medium">5. Analizza $ x^3 - 3x^2y + 3xy^2 - y^3 $:</p>
+                            <span onclick="toggleHelp(this)" class="help-icon text-xl" title="Aiuto">💡</span>
+                        </div>
+                        <div class="help-box">Conta i termini per vedere se è un quadrinomio. Controlla se le potenze di x scendono regolarmente da 3 a 0.</div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                             <label class="flex items-center space-x-2 p-2 bg-gray-50 rounded border"><input type="checkbox" data-correct="true" class="cb-q5"> <span>Quadrinomio</span></label>
-                            <label class="flex items-center space-x-2 p-2 bg-gray-50 rounded border"><input type="checkbox" data-correct="true" class="cb-q5"> <span>Completo (x)</span></label>
+                            <label class="flex items-center space-x-2 p-2 bg-gray-50 rounded border"><input type="checkbox" data-correct="true" class="cb-q5"> <span>Completo rispetto a x</span></label>
                             <label class="flex items-center space-x-2 p-2 bg-gray-50 rounded border"><input type="checkbox" data-correct="true" class="cb-q5"> <span>Omogeneo</span></label>
-                            <label class="flex items-center space-x-2 p-2 bg-gray-50 rounded border"><input type="checkbox" data-correct="false" class="cb-q5"> <span>4° grado</span></label>
+                            <label class="flex items-center space-x-2 p-2 bg-gray-50 rounded border"><input type="checkbox" data-correct="false" class="cb-q5"> <span>Di 4° grado complessivo</span></label>
                         </div>
                         <button onclick="checkCheckboxes(this, '.cb-q5')" class="check-btn mt-4 px-4 py-2 bg-emerald-500 text-white rounded">Verifica</button>
                         <div class="feedback text-sm"></div>
                     </div>
 
+                    <!-- Es 6 -->
                     <div class="question-block" data-qid="6" data-answer="c" data-attempts="0">
-                        <p class="font-medium mb-3">6. Trinomio di 4° grado:</p>
+                        <div class="flex items-center gap-2 mb-3">
+                            <p class="font-medium">6. Quale tra questi è un <b>trinomio di 4° grado</b>?</p>
+                            <span onclick="toggleHelp(this)" class="help-icon text-xl" title="Aiuto">💡</span>
+                        </div>
+                        <div class="help-box">Deve avere tre termini (trinomio) e il grado massimo deve essere 4.</div>
                         <div class="space-y-2">
                             <label class="flex items-center space-x-3 p-3 border rounded cursor-pointer"><input type="radio" name="q6" value="a"> <span>$ x^4 - y^4 $</span></label>
                             <label class="flex items-center space-x-3 p-3 border rounded cursor-pointer"><input type="radio" name="q6" value="b"> <span>$ x^3 + x^2 + x $</span></label>
@@ -147,29 +175,49 @@
             <section>
                 <h2 class="text-xl font-semibold border-b-2 border-emerald-200 pb-2 mb-4">3. Esercizi di Calcolo</h2>
                 <div class="space-y-6">
+                    <!-- Es 7 -->
                     <div class="p-4 bg-slate-100 rounded-lg question-block" data-qid="7" data-attempts="0">
-                        <p class="mb-2">1. $(5x^2 - 3x + 4) - (3x^2 - x + 6)$</p>
+                        <div class="flex items-center gap-2 mb-2">
+                            <p>1. $(5x^2 - 3x + 4) - (3x^2 - x + 6)$</p>
+                            <span onclick="toggleHelp(this)" class="help-icon text-lg" title="Aiuto">💡</span>
+                        </div>
+                        <div class="help-box">Cambia i segni del secondo polinomio: $5x^2 - 3x + 4 - 3x^2 + x - 6$. Poi somma i simili.</div>
                         <input type="text" class="w-full md:w-64 p-2 border rounded" placeholder="Risultato...">
                         <button onclick="checkManual(this, '2x^2-2x-2')" class="check-btn bg-emerald-500 text-white px-4 py-2 rounded">Verifica</button>
                         <div class="feedback text-sm mt-2"></div>
                     </div>
 
+                    <!-- Es 8 -->
                     <div class="p-4 bg-slate-100 rounded-lg question-block" data-qid="8" data-attempts="0">
-                        <p class="mb-2">2. $(2a^2 - 4a + 1) \cdot (-3a)$</p>
+                        <div class="flex items-center gap-2 mb-2">
+                            <p>2. $(2a^2 - 4a + 1) \cdot (-3a)$</p>
+                            <span onclick="toggleHelp(this)" class="help-icon text-lg" title="Aiuto">💡</span>
+                        </div>
+                        <div class="help-box">Moltiplica $-3a$ per ogni termine: $(-3a)(2a^2)$, $(-3a)(-4a)$, $(-3a)(1)$.</div>
                         <input type="text" class="w-full md:w-64 p-2 border rounded" placeholder="Risultato...">
                         <button onclick="checkManual(this, '-6a^3+12a^2-3a')" class="check-btn bg-emerald-500 text-white px-4 py-2 rounded">Verifica</button>
                         <div class="feedback text-sm mt-2"></div>
                     </div>
 
+                    <!-- Es 9 -->
                     <div class="p-4 bg-slate-100 rounded-lg question-block" data-qid="9" data-attempts="0">
-                        <p class="mb-2">3. $(x + 2) \cdot (3x - 5)$</p>
+                        <div class="flex items-center gap-2 mb-2">
+                            <p>3. $(x + 2) \cdot (3x - 5)$</p>
+                            <span onclick="toggleHelp(this)" class="help-icon text-lg" title="Aiuto">💡</span>
+                        </div>
+                        <div class="help-box">Esegui i 4 prodotti: $x \cdot 3x$, $x \cdot (-5)$, $2 \cdot 3x$, $2 \cdot (-5)$ e somma i termini simili.</div>
                         <input type="text" class="w-full md:w-64 p-2 border rounded" placeholder="Risultato...">
                         <button onclick="checkManual(this, '3x^2+x-10')" class="check-btn bg-emerald-500 text-white px-4 py-2 rounded">Verifica</button>
                         <div class="feedback text-sm mt-2"></div>
                     </div>
 
+                    <!-- Es 10 -->
                     <div class="p-4 bg-slate-100 rounded-lg question-block" data-qid="10" data-attempts="0">
-                        <p class="mb-2">4. $(15y^5 - 10y^3 + 5y^2) : (5y^2)$</p>
+                        <div class="flex items-center gap-2 mb-2">
+                            <p>4. $(15y^5 - 10y^3 + 5y^2) : (5y^2)$</p>
+                            <span onclick="toggleHelp(this)" class="help-icon text-lg" title="Aiuto">💡</span>
+                        </div>
+                        <div class="help-box">Dividi ciascun coefficiente per 5 e sottrai gli esponenti della y.</div>
                         <input type="text" class="w-full md:w-64 p-2 border rounded" placeholder="Risultato...">
                         <button onclick="checkManual(this, '3y^3-2y+1')" class="check-btn bg-emerald-500 text-white px-4 py-2 rounded">Verifica</button>
                         <div class="feedback text-sm mt-2"></div>
@@ -212,7 +260,7 @@
             errors: 0
         };
 
-        function updateStats(isCorrect, isFirstAttempt) {
+        function updateStats(isCorrect) {
             stats.completed++;
             if (isCorrect) stats.correct++;
             else stats.errors++;
@@ -233,42 +281,45 @@
             document.getElementById('final-percent').textContent = percent + '%';
             
             let msg = "";
-            if (percent === 100) msg = "Perfetto! Sei pronto per la verifica!";
-            else if (percent >= 80) msg = "Ottimo lavoro! Solo qualche piccola svista.";
-            else if (percent >= 60) msg = "Sufficiente, ma ti consiglio di ripassare i punti dove hai sbagliato.";
-            else msg = "Dovresti ripassare bene la teoria prima del test vero e proprio.";
+            if (percent === 100) msg = "Perfetto! Hai dominato i polinomi!";
+            else if (percent >= 80) msg = "Ottimo lavoro! Sei pronto per la verifica.";
+            else if (percent >= 60) msg = "Sufficiente, ma rivedi i punti deboli.";
+            else msg = "Ti consiglio di ripassare bene prima del test vero e proprio.";
             
             document.getElementById('final-message').textContent = msg;
             report.classList.remove('hidden');
-            report.scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => {
+                report.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
         }
 
         function toggleHelp(icon) {
             const block = icon.closest('.question-block');
             const helpBox = block.querySelector('.help-box');
-            helpBox.style.display = helpBox.style.display === 'block' ? 'none' : 'block';
+            helpBox.style.display = (helpBox.style.display === 'block') ? 'none' : 'block';
         }
 
         function handleAttempts(block, isCorrect, correctMsg, errorMsg) {
             const feedback = block.querySelector('.feedback');
             const btn = block.querySelector('.check-btn');
-            let attempts = parseInt(block.getAttribute('data-attempts'));
+            let attempts = parseInt(block.getAttribute('data-attempts') || 0);
 
             if (isCorrect) {
                 showFeedback(feedback, correctMsg, "correct");
                 btn.disabled = true;
                 btn.classList.add('opacity-50');
-                updateStats(true, attempts === 0);
+                btn.textContent = "✓";
+                updateStats(true);
             } else {
                 attempts++;
                 block.setAttribute('data-attempts', attempts);
                 if (attempts < 2) {
-                    showFeedback(feedback, "⚠️ Sbagliato. Ultimo tentativo!", "retry");
+                    showFeedback(feedback, "⚠️ Sbagliato. Riprova!", "retry");
                 } else {
                     showFeedback(feedback, errorMsg, "incorrect");
                     btn.disabled = true;
                     btn.classList.add('opacity-50');
-                    updateStats(false, false);
+                    updateStats(false);
                 }
             }
         }
@@ -277,13 +328,13 @@
             const block = btn.closest('.question-block');
             const selected = block.querySelector('input[type="radio"]:checked');
             if (!selected) return;
-            handleAttempts(block, selected.value === block.dataset.answer, "Esatto!", "Errato.");
+            handleAttempts(block, selected.value === block.dataset.answer, "Esatto!", "Sbagliato.");
         }
 
         function checkInput(btn) {
             const block = btn.closest('.question-block');
             const input = block.querySelector('input');
-            handleAttempts(block, input.value.trim() === block.dataset.answer, "Corretto!", "Sbagliato.");
+            handleAttempts(block, input.value.trim() === block.dataset.answer, "Corretto!", "Risposta: " + block.dataset.answer);
         }
 
         function checkCheckboxes(btn, selector) {
@@ -293,12 +344,13 @@
             checkboxes.forEach(cb => {
                 if (cb.checked !== (cb.dataset.correct === 'true')) ok = false;
             });
-            handleAttempts(block, ok, "Giusto!", "Alcuni sono sbagliati.");
+            handleAttempts(block, ok, "Giusto!", "L'analisi è errata.");
         }
 
         function checkManual(btn, solution) {
             const block = btn.closest('.question-block');
-            const val = block.querySelector('input').value.replace(/\s+/g, '').toLowerCase();
+            const input = block.querySelector('input');
+            const val = input.value.replace(/\s+/g, '').toLowerCase();
             handleAttempts(block, val === solution.toLowerCase(), "Ottimo!", "Soluzione: " + solution);
         }
 
